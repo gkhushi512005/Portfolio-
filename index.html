@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Khushi Gupta — Full-Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0F2A4A;
+    --blue-mid:#173A63;
+    --blue-line:#3B6E9E;
+    --paper:#EFF4F8;
+    --paper-dim:#B9CBDD;
+    --cyan:#6FD6E8;
+    --amber:#E8A33D;
+    --coral:#E8735A;
+    --mono:'Space Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--blue-deep);
+    color:var(--paper);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(var(--blue-mid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blue-mid) 1px, transparent 1px);
+    background-size:40px 40px;
+    background-position:-1px -1px;
+  }
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--amber); color:var(--blue-deep);}
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,42,74,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--blue-line);
+  }
+  nav .wrap{display:flex; justify-content:space-between; align-items:center; height:64px;}
+  .brand{font-family:var(--mono); font-weight:700; letter-spacing:1px; font-size:15px;}
+  .brand span{color:var(--amber);}
+  .navlinks{display:flex; gap:28px; font-family:var(--mono); font-size:12px; letter-spacing:1px; text-transform:uppercase;}
+  .navlinks a{color:var(--paper-dim); position:relative; padding:4px 0;}
+  .navlinks a:hover{color:var(--cyan);}
+  .navlinks a::after{content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--cyan); transition:width .25s ease;}
+  .navlinks a:hover::after{width:100%;}
+  #navToggle{display:none;}
+
+  /* ---- Hero ---- */
+  header.hero{
+    position:relative;
+    padding:90px 0 60px;
+    border-bottom:1px solid var(--blue-line);
+  }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--cyan); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--cyan);}
+  h1.title{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(36px, 7vw, 68px);
+    letter-spacing:1px;
+    line-height:1.05;
+    text-transform:uppercase;
+  }
+  .subtitle{
+    margin-top:18px;
+    font-size:clamp(16px,2.4vw,20px);
+    color:var(--paper-dim);
+    max-width:620px;
+    position:relative;
+    padding-left:20px;
+  }
+  .dim-arrow{
+    display:flex; align-items:center; gap:8px; margin-top:22px; margin-bottom:26px;
+    color:var(--paper-dim); font-family:var(--mono); font-size:12px;
+  }
+  .dim-arrow .line{flex:1; max-width:120px; height:1px; background:var(--blue-line); position:relative;}
+  .dim-arrow .line::before,.dim-arrow .line::after{content:""; position:absolute; top:-3px; width:1px; height:7px; background:var(--blue-line);}
+  .dim-arrow .line::before{left:0;} .dim-arrow .line::after{right:0;}
+
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px; margin-top:8px;}
+  .stamp{
+    font-family:var(--mono); font-size:13px; letter-spacing:1px; text-transform:uppercase;
+    border:1px solid var(--cyan); color:var(--cyan);
+    padding:12px 22px; border-radius:2px;
+    transition:all .2s ease; display:inline-block;
+  }
+  .stamp:hover{background:var(--cyan); color:var(--blue-deep);}
+  .stamp.solid{background:var(--amber); border-color:var(--amber); color:var(--blue-deep); font-weight:700;}
+  .stamp.solid:hover{background:transparent; color:var(--amber);}
+
+  /* Title block (drafting corner box) */
+  .titleblock{
+    margin-top:56px;
+    border:1px solid var(--blue-line);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .titleblock div{
+    padding:14px 18px;
+    border-right:1px solid var(--blue-line);
+    border-top:1px solid var(--blue-line);
+  }
+  .titleblock div:nth-child(4){border-right:none;}
+  .titleblock div:nth-child(-n+4){border-top:none;}
+  .titleblock label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--cyan); margin-bottom:6px;}
+  .titleblock strong{font-family:var(--mono); font-size:14px; color:var(--paper);}
+
+  /* ---- Section shell ---- */
+  section{padding:80px 0; border-bottom:1px solid var(--blue-line); position:relative;}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:44px;}
+  .fig{font-family:var(--mono); color:var(--amber); font-size:13px; letter-spacing:2px;}
+  h2{font-family:var(--mono); font-size:clamp(22px,3vw,30px); text-transform:uppercase; letter-spacing:1px;}
+  .sec-head .rule{flex:1; height:1px; background:var(--blue-line);}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---- About ---- */
+  .about-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:48px; align-items:start;}
+  .about-grid p{color:var(--paper-dim); font-size:16px; margin-bottom:16px;}
+  .about-grid p strong{color:var(--paper);}
+  .stat-panel{border:1px dashed var(--blue-line); padding:22px; }
+  .stat-row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--blue-mid); font-family:var(--mono); font-size:13px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-row span:first-child{color:var(--paper-dim);}
+  .stat-row span:last-child{color:var(--cyan); font-weight:700;}
+
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} .titleblock{grid-template-columns:1fr 1fr;} }
+
+  /* ---- Skills / component legend ---- */
+  .legend{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--blue-line); border:1px solid var(--blue-line);}
+  .legend-item{background:var(--blue-deep); padding:22px;}
+  .legend-item h3{font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--amber); margin-bottom:12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{font-family:var(--mono); font-size:12px; border:1px solid var(--blue-line); color:var(--paper-dim); padding:5px 10px; border-radius:2px; transition:border-color .2s, color .2s;}
+  .chip:hover{border-color:var(--cyan); color:var(--cyan);}
+
+  /* ---- Projects (schematic panels) ---- */
+  .panel{
+    border:1px solid var(--blue-line);
+    margin-bottom:28px;
+    position:relative;
+  }
+  .panel-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 22px; border-bottom:1px solid var(--blue-line);
+    flex-wrap:wrap; gap:8px;
+  }
+  .panel-head h3{font-family:var(--mono); font-size:17px; letter-spacing:.5px;}
+  .panel-tag{font-family:var(--mono); font-size:10px; letter-spacing:1.5px; color:var(--blue-deep); background:var(--cyan); padding:4px 9px; text-transform:uppercase;}
+  .panel-body{padding:22px;}
+  .stack-line{font-family:var(--mono); font-size:11.5px; color:var(--paper-dim); letter-spacing:.5px; margin-bottom:16px; text-transform:uppercase;}
+  .panel-body ul{list-style:none;}
+  .panel-body li{position:relative; padding-left:20px; margin-bottom:10px; color:var(--paper-dim); font-size:14.5px;}
+  .panel-body li::before{content:"—"; position:absolute; left:0; color:var(--amber);}
+
+  /* ---- Experience (revision table) ---- */
+  .rev-table{width:100%; border-collapse:collapse; font-size:14px;}
+  .rev-table thead th{
+    font-family:var(--mono); font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+    text-align:left; color:var(--amber); padding:10px 14px; border-bottom:1px solid var(--blue-line);
+  }
+  .rev-table td{padding:16px 14px; border-bottom:1px solid var(--blue-mid); vertical-align:top; color:var(--paper-dim);}
+  .rev-table td.rev-id{font-family:var(--mono); color:var(--cyan); font-weight:700; white-space:nowrap;}
+  .rev-table td.rev-role{color:var(--paper); font-weight:600;}
+  .rev-table td.rev-date{font-family:var(--mono); font-size:12px; white-space:nowrap;}
+  @media (max-width:700px){
+    .rev-table thead{display:none;}
+    .rev-table, .rev-table tbody, .rev-table tr, .rev-table td{display:block; width:100%;}
+    .rev-table tr{border-bottom:1px solid var(--blue-line); padding:14px 0;}
+    .rev-table td{border-bottom:none; padding:4px 0;}
+  }
+
+  /* ---- Education / Achievements ---- */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:760px){.two-col{grid-template-columns:1fr;}}
+  .edu-item{margin-bottom:22px; padding-left:18px; border-left:2px solid var(--blue-line);}
+  .edu-item h4{font-family:var(--mono); font-size:15px; color:var(--paper);}
+  .edu-item .meta{font-family:var(--mono); font-size:11.5px; color:var(--cyan); margin:4px 0;}
+  .edu-item p{color:var(--paper-dim); font-size:13.5px;}
+  .badge-list li{margin-bottom:12px; padding-left:18px; position:relative; color:var(--paper-dim); font-size:14px;}
+  .badge-list li::before{content:"◆"; position:absolute; left:0; color:var(--amber); font-size:10px; top:5px;}
+  .badge-list li strong{color:var(--paper);}
+
+  /* ---- Contact / footer title block ---- */
+  footer{padding:80px 0 50px;}
+  .contact-block{border:1px solid var(--blue-line); padding:48px; text-align:center;}
+  .contact-block h2{margin-bottom:14px;}
+  .contact-block p{color:var(--paper-dim); max-width:480px; margin:0 auto 28px;}
+  .contact-links{display:flex; justify-content:center; flex-wrap:wrap; gap:14px;}
+  .foot-note{margin-top:50px; text-align:center; font-family:var(--mono); font-size:11px; color:var(--blue-line); letter-spacing:1px;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
+
+  /* mobile nav */
+  @media (max-width:640px){
+    .navlinks{
+      position:fixed; top:64px; left:0; right:0; background:var(--blue-deep);
+      flex-direction:column; gap:0; border-bottom:1px solid var(--blue-line);
+      max-height:0; overflow:hidden; transition:max-height .3s ease;
+    }
+    .navlinks a{padding:16px 28px; border-bottom:1px solid var(--blue-mid); width:100%;}
+    #navToggle:checked ~ .navlinks{max-height:400px;}
+    .burger{display:flex !important; flex-direction:column; gap:5px; cursor:pointer; width:22px;}
+    .burger span{height:2px; background:var(--paper); display:block;}
+  }
+  .burger{display:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="brand"><span>Portfolio</span></a>
+    <input type="checkbox" id="navToggle" style="display:none;">
+    <label for="navToggle" class="burger"><span></span><span></span><span></span></label>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">Frontend Developer</div>
+    <h1 class="title">Khushi Gupta</h1>
+    <p class="subtitle">Frontend Developer | React.js | JavaScript | MERN</p>
+    <div class="dim-arrow"><span></span><span class="line"></span><span></span></div>
+    <div class="hero-ctas">
+      <a class="stamp solid" href="#projects">View Projects</a>
+      <a class="stamp" href="#contact">Get in Touch</a>
+      <a class="stamp" href="Khushi_Resume.pdf" target="_blank" rel="noopener">Download Resume ↓</a>
+    </div>
+
+    <div class="titleblock">
+      <div><label>Focus</label><strong>MERN Stack</strong></div>
+      <div><label>DSA Solved</label><strong>200+ Problems</strong></div>
+      <div><label>College Rank</label><strong>2nd — AKTU</strong></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="fig"></span><h2>About</h2><span class="rule"></span></div>
+    <div class="about-grid reveal">
+      <div>
+        <p>I'm a <strong>Computer Science Engineering student</strong> (2023–2027) at Future Group of Institute of Engineering &amp; Technology, Bareilly, currently maintaining a <strong>CGPA of 8.0</strong>. My work centers on the MERN stack — React, Node.js, Express, and MongoDB — with a particular interest in the parts of an application that keep it trustworthy: <strong>JWT authentication, role-based access control, and clean RESTful API design.</strong></p>
+        <p>I've shipped a full-stack complaint-management system end to end — auth, CRUD, admin workflows, and an analytics dashboard — and completed hands-on internships in both full-stack development and applied AI/data analysis. I solve DSA problems on LeetCode regularly and I'm actively looking for full-stack developer roles across the NCR region.</p>
+      </div>
+      <div class="stat-panel">
+        <div class="stat-row"><span>Stack</span><span>MERN + TS</span></div>
+        <div class="stat-row"><span>Auth</span><span>JWT / RBAC</span></div>
+        <div class="stat-row"><span>Databases</span><span>MongoDB · MySQL</span></div>
+        <div class="stat-row"><span>Internships</span><span>2 Completed</span></div>
+        <div class="stat-row"><span>Status</span><span>Open to Internships</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="fig"></span><h2>Component Legend</h2><span class="rule"></span></div>
+    <div class="legend reveal">
+      <div class="legend-item">
+        <h3>Languages</h3>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">JavaScript (ES6+)</span><span class="chip">TypeScript</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="legend-item">
+        <h3>Frontend</h3>
+        <div class="chips">
+          <span class="chip">React.js</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">Bootstrap</span><span class="chip">Flexbox</span><span class="chip">Responsive Design</span>
+        </div>
+      </div>
+      <div class="legend-item">
+        <h3>Backend</h3>
+        <div class="chips">
+          <span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">RESTful APIs</span><span class="chip">CRUD Ops</span>
+        </div>
+      </div>
+      <div class="legend-item">
+        <h3>Databases</h3>
+        <div class="chips">
+          <span class="chip">MongoDB</span><span class="chip">MySQL</span><span class="chip">Data Modeling</span>
+        </div>
+      </div>
+      <div class="legend-item">
+        <h3>Authentication</h3>
+        <div class="chips">
+          <span class="chip">JWT</span><span class="chip">RBAC</span><span class="chip">Secure API Access</span>
+        </div>
+      </div>
+      <div class="legend-item">
+        <h3>Tools &amp; Concepts</h3>
+        <div class="chips">
+          <span class="chip">Git / GitHub</span><span class="chip">DSA</span><span class="chip">OOP</span><span class="chip">Debugging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="fig"></span><h2>Projects</h2><span class="rule"></span></div>
+
+    <div class="panel reveal">
+      <div class="panel-head">
+        <h3>Complaint &amp; Issue Tracking System</h3>
+        <span class="panel-tag">MERN Stack</span>
+      </div>
+      <div class="panel-body">
+        <div class="stack-line">MongoDB · Express.js · React.js · Node.js · JWT</div>
+        <ul>
+          <li>Architected a full-stack application for end-to-end complaint lifecycle management with separate user and admin workflows.</li>
+          <li>Implemented secure JWT authentication and role-based access control to protect complaint data and restrict administrative operations.</li>
+          <li>Developed RESTful APIs supporting complaint CRUD operations, threaded comments, status management, and notification workflows.</li>
+          <li>Built an interactive React + Recharts analytics dashboard visualizing resolution time, workload distribution, and complaint trends.</li>
+        </ul>
+        <a class="stamp" href="https://github.com/gkhushi512005/complaint-tracking-system" target="_blank">GitHub</a>
+        <a class="stamp" href="https://complaint-tracking-system-qn6p.onrender.com/" target="_blank">Live Demo</a>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-head">
+        <h3>AI Chatbot for FAQ Automation</h3>
+        <span class="panel-tag">Python · NLP</span>
+      </div>
+      <div class="panel-body">
+        <div class="stack-line">Python · NLP · Scikit-learn · React.js · REST APIs</div>
+        <ul>
+          <li>Built an AI-powered FAQ chatbot using intent classification and semantic matching to automate frequently asked queries.</li>
+          <li>Exposed chatbot functionality through RESTful APIs and integrated a real-time React-based chat interface.</li>
+          <li>Created an admin module to manage FAQs, review unanswered queries, and improve training data over time.</li>
+        </ul>
+         <a class="stamp" href="https://github.com/gkhushi512005/AI-FAQ-Chatbot" target="_blank">GitHub</a>
+         <a class="stamp" href="https://ai-faq-chatbot-frontend.onrender.com/" target="_blank">Live Demo</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="fig"></span><h2>Internship</h2><span class="rule"></span></div>
+    <table class="rev-table reveal">
+      <thead>
+        <tr><th>Rev</th><th>Role</th><th>Details</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rev-id">B</td>
+          <td class="rev-role">Full Stack Development Intern<br><span style="color:var(--paper-dim); font-weight:400;">Codemax Digital Solutions</span></td>
+          <td>Hands-on frontend and backend development — UI implementation, backend logic, debugging, and API integration in a practical, production-adjacent environment.</td>
+          <td class="rev-date">Jun – Jul 2026</td>
+        </tr>
+        <tr>
+          <td class="rev-id">A</td>
+          <td class="rev-role">Virtual Intern<br><span style="color:var(--paper-dim); font-weight:400;">IBM SkillsBuild</span></td>
+          <td>Performed exploratory data analysis on real-world datasets using Python, Pandas, NumPy, Matplotlib, and Seaborn to surface patterns and data-driven insights.</td>
+          <td class="rev-date">Oct – Nov 2025</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="fig"></span><h2>Education &amp; Achievements</h2><span class="rule"></span></div>
+    <div class="two-col reveal">
+      <div>
+        <div class="edu-item">
+          <h4>B.Tech, Computer Science Engineering</h4>
+          <div class="meta">Future Institute of Engineering &amp; Technology, Bareilly · 2023–2027</div>
+          <p>CGPA: 8.0 &nbsp;·&nbsp; Coursework: DSA, Database Systems, Operating Systems, Computer Networks</p>
+        </div>
+        <div class="edu-item">
+          <h4>Intermediate (PCM) — 79%</h4>
+          <div class="meta">St. Joseph's Senior Secondary School, Puranpur · 2022</div>
+        </div>
+        <div class="edu-item">
+          <h4>High School — 86%</h4>
+          <div class="meta">St. Joseph's Senior Secondary School, Puranpur · 2020</div>
+        </div>
+      </div>
+      <div>
+        <ul class="badge-list">
+          <li><strong>2nd Rank in College</strong> — AKTU Semester Examination</li>
+          <li><strong>200+ DSA Problems solved</strong> on LeetCode across arrays, trees, graphs, and dynamic programming</li>
+          <li><strong>Cisco Networking Academy</strong> — Introduction to Modern AI</li>
+          <li><strong>IBM Skills Network</strong> — Artificial Intelligence Virtual Internship</li>
+          <li><strong>NASSCOM</strong> — Digital Application Fundamentals (STEM)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-block reveal">
+      <span class="fig"></span>
+      <h2 style="margin-top:14px;">Let's build something.</h2>
+      <p>Currently looking for full-stack developer roles and internships across the NCR region. Reach out — I reply fast.</p>
+      <div class="contact-links">
+        <a class="stamp" href="mailto:googlekhushigupta512005@gmail.com" target="_blank">khushigupta512005@gmail.com</a>
+        <a class="stamp" href="tel:+917037046458"target="_blank">+91 7037046458</a>
+        <a class="stamp" href ="https://www.linkedin.com/in/khushigupta-cse/" target="_blank">LinkedIn</a>
+        <a class="stamp" href="https://github.com/gkhushi512005" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <div class="foot-note">Designed and Developed by Khushi Gupta</div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+
+  // close mobile nav on link click
+  document.querySelectorAll('.navlinks a').forEach(a=>{
+    a.addEventListener('click', ()=>{ document.getElementById('navToggle').checked = false; });
+  });
+
+  // TODO: replace these with your real profile URLs
+  document.getElementById('linkedinLink').href = 'https://www.linkedin.com/in/khushigupta-cse/';
+  document.getElementById('githubLink').href = 'https://github.com/gkhushi512005';
+</script>
+
+</body>
+</html>
